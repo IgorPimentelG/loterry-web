@@ -1,10 +1,15 @@
 
-import './App.css';
+import { useEffect } from 'react';
+import web3 from './provider/web3';
 
-function App() {
+const App: React.FC = () => {
+
+  useEffect(() => {
+    web3.eth.getAccounts().then(console.log);
+  });
+
   return (
-    <div>
-    </div>
+    <div></div>
   );
 }
 
