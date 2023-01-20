@@ -1,4 +1,5 @@
 import web3 from './web3';
+import { AbiItem } from 'web3-utils';
 
 const address = '0xcEf0893356Cf6f318451ef2ACb4A5493912A5c7C';
 const abi = [
@@ -116,5 +117,5 @@ const abi = [
 	}
 ];
 
-export default new web3.eth.Contract(abi, address);
+export default new web3.eth.Contract(abi as AbiItem[], address);
 
