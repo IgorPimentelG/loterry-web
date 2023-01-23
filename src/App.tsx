@@ -18,6 +18,7 @@ const App: React.FC = () => {
 	const inputNameRef = useRef<HTMLInputElement>(null);
 	const [info, setInfo] = useState<Info>();
 	const [status, setStatus] = useState<string>('');
+	const [result, setResult] = useState<string>('');
 
   useEffect(() => {
     getInfo();
@@ -50,6 +51,15 @@ const App: React.FC = () => {
 		setStatus('You have been entered!');
 	}
 
+	async function pickWinner() {
+		setResult('Waiting on transaction success...');
+		const accounts = await web3.eth.getAccounts();
+		await lottery.methods.pickWinner().send({
+			from: accounts[0]
+		});
+		setResult('A winner has been picked!');
+	}
+
   return (
     <main className={styles.container}>
 			<div>
@@ -76,6 +86,23 @@ const App: React.FC = () => {
 			{status && (
 				<div className={styles.load}>
 					<span>{status}</span>
+				</div>
+			)}
+
+			<hr />
+			
+			<div className={styles.admin}>
+				<div>
+					<h4>Ready to pick a winner?</h4>
+					<h6>Only admin</h6>
+				</div>
+				<button onClick={pickWinner}>
+					Pick a winner!
+				</button>
+			</div>
+			{result && (
+				<div className={styles.load}>
+					<span>{result}</span>
 				</div>
 			)}
 		</main>
